@@ -98,6 +98,7 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void move()
     {
+        //Equals the Previous Snake Body Part Position;
         for (int i = bodyParts; i > 0 ; i--)
         {
             x[i] = x[i-1]; //Shift Everything
@@ -150,7 +151,11 @@ public class GamePanel extends JPanel implements ActionListener {
         if (!running) //Game over Stop the Timer
         {
             timer.stop();
-            System.out.println("GAME OVER !!!!");
+            System.out.println("""
+-----------------------------------------------------------
+█▀▀ ▄▀█ █▀▄▀█ █▀▀   █▀█ █░█ █▀▀ █▀█
+█▄█ █▀█ █░▀░█ ██▄   █▄█ ▀▄▀ ██▄ █▀▄
+                   """);
         }
 
 
@@ -179,7 +184,38 @@ public class GamePanel extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e)
         {
+            switch(e.getKeyCode())
+            {
+                //Left Key
+                case KeyEvent.VK_A:
+                    if (direction != 'R')
+                    {
+                        direction = 'L';
+                    }
+                    break;
+                    //Right Key
+                case KeyEvent.VK_D :
+                    if (direction != 'L')
+                {
+                    direction = 'R';
+                }
+                    break;
+                    //Up Key
+                case KeyEvent.VK_W:
+                    if (direction != 'D')
+                    {
+                        direction = 'U';
+                    }
+                    break;
+                    //Down Key
+                case KeyEvent.VK_S:
+                    if (direction != 'U')
+                    {
+                        direction = 'D';
+                    }
+                    break;
 
+            }
         }
 
     }
