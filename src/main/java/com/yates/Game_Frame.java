@@ -14,6 +14,7 @@ public class Game_Frame extends JFrame {
         this.pack();
         this.setVisible(true);
         this.setLocationRelativeTo(null);
+
     }
     //</editor-fold>
 
