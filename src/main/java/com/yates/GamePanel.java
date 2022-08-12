@@ -57,37 +57,43 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void draw(Graphics g)
     {
-        //Grids For Snake Game Background
-        for (int i = 0; i < Screen_Height / UNIT_SIZE; i++)
-        {
-            //Main Grid
-            g.setColor(Color.red);
-            g.drawLine(i * UNIT_SIZE,0,i*UNIT_SIZE, Screen_Height);
-            g.drawLine(0,i * UNIT_SIZE, Screen_Width, i*UNIT_SIZE);
-        }
-        //Draws the Apple
+        if (running) {
+            //Grids For Snake Game Background
+            for (int i = 0; i < Screen_Height / UNIT_SIZE; i++) {
+                //Main Grid
+                g.setColor(Color.red);
+                g.drawLine(i * UNIT_SIZE, 0, i * UNIT_SIZE, Screen_Height);
+                g.drawLine(0, i * UNIT_SIZE, Screen_Width, i * UNIT_SIZE);
+            }
+            //Draws the Apple
 
             g.setColor(Color.green);
-            g.fillOval(appleX,appleY,UNIT_SIZE, UNIT_SIZE); //Location, Location,  Width Size of Draw and Hight
-        //Draws Snake
-        for (int i = 0; i < bodyParts ; i++)
-        {
-            if (i == 0)
-            {
-                g.setColor(Color.green);
-                g.fillRect(x[i],y[i],UNIT_SIZE, UNIT_SIZE);
+            g.fillOval(appleX, appleY, UNIT_SIZE, UNIT_SIZE); //Location, Location,  Width Size of Draw and Hight
+            //Draws Snake
+            for (int i = 0; i < bodyParts; i++) {
+                if (i == 0) {
+                    g.setColor(Color.green);
+                    g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+                } else {
+                    g.setColor(new Color(45, 180, 0));
+                    g.fillRect(x[i], y[i], UNIT_SIZE, UNIT_SIZE);
+                }
             }
-            else
-            {
-                g.setColor(new Color(45,180,0));
-                g.fillRect(x[i],y[i],UNIT_SIZE, UNIT_SIZE);
-            }
+            //Score Text
+            g.setColor(Color.red);
+            g.setFont(new Font("Ink Free", Font.BOLD, 40));
+            FontMetrics metrics = getFontMetrics(g.getFont());
+            g.drawString("Score: " +applesEaten, (Screen_Width - metrics.stringWidth("Score: " +applesEaten))/2,g.getFont().getSize());
+        }
+
+        else {
+            gameOver(g);
         }
         //Random Triangle Draw
-        g.setColor(Color.YELLOW);
-        g.drawLine(120, 130, 280, 130) ;
-        g.drawLine(120, 130, 200, 65);
-        g.drawLine(200, 65, 280, 130);
+//        g.setColor(Color.YELLOW);
+//        g.drawLine(120, 130, 280, 130) ;
+//        g.drawLine(120, 130, 200, 65);
+//        g.drawLine(200, 65, 280, 130);
     }
     public void newApple()
     {
@@ -127,7 +133,12 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void checkApple()
     {
-
+            if ((x[0] == appleX) && (y[0] == appleY))
+            {
+                bodyParts++;
+                applesEaten++;
+                newApple();
+            }
     }
     public void checkCollision()
     {
@@ -163,7 +174,14 @@ public class GamePanel extends JPanel implements ActionListener {
     }
     public void gameOver(Graphics g)
     {
-
+        //Game Over Text
+        g.setColor(Color.red);
+        g.setFont(new Font("Ink Free", Font.BOLD, 75));
+        FontMetrics metrics = getFontMetrics(g.getFont());
+        g.drawString("Game Over", (Screen_Width - metrics.stringWidth("Game Over"))/2,Screen_Height/2);
+        g.setFont(new Font("Ink Free", Font.BOLD, 40));
+        FontMetrics metrics2 = getFontMetrics(g.getFont());
+        g.drawString("Score: " +applesEaten, (Screen_Width - metrics2.stringWidth("Score: " +applesEaten))/2,g.getFont().getSize());
     }
 
 
