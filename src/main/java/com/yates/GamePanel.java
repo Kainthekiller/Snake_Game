@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import java.awt.Graphics;
 
 public class GamePanel extends JPanel implements ActionListener {
 
@@ -44,16 +45,21 @@ public class GamePanel extends JPanel implements ActionListener {
         timer = new Timer(DELAY,this);
         timer.start();
     }
-    public void paintComponents(Graphics g)
+    public void paintComponent(Graphics g)
     {
-        super.paintComponents(g);
+
+        super.paintComponent(g);
         draw(g);
+        draw(g);
+
     }
     public void draw(Graphics g)
     {
         for (int i = 0; i < Screen_Height / UNIT_SIZE; i++)
         {
-            g.drawLine(i * UNIT_SIZE,0,i*UNIT_SIZE,Screen_Height);
+            g.drawLine(i * UNIT_SIZE,0,i*UNIT_SIZE, Screen_Height);
+            g.drawLine(0,i * UNIT_SIZE, Screen_Width, i*UNIT_SIZE);
+            g.setColor(Color.blue);
         }
     }
     public void newApple()
