@@ -50,14 +50,15 @@ public class GamePanel extends JPanel implements ActionListener {
 
         super.paintComponent(g);
         draw(g);
-        draw(g);
 
     }
+
     public void draw(Graphics g)
     {
         for (int i = 0; i < Screen_Height / UNIT_SIZE; i++)
         {
             g.drawLine(i * UNIT_SIZE,0,i*UNIT_SIZE, Screen_Height);
+            g.setColor(Color.red);
             g.drawLine(0,i * UNIT_SIZE, Screen_Width, i*UNIT_SIZE);
             g.setColor(Color.blue);
         }
