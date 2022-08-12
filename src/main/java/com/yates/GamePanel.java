@@ -18,7 +18,7 @@ public class GamePanel extends JPanel implements ActionListener {
     static final int DELAY = 75;
     final int x[] = new int[GAME_UNITS];
     final int y[] = new int[GAME_UNITS];
-    int bodyParts = 6;
+    int bodyParts = 6; //Snakes Body Starts at 6 for a typical Size and will ++ with each apple grab
     int applesEaten = 0;
     int appleX;
     int appleY; //Apple Pos
@@ -40,7 +40,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void startGame()
     {
-        newApple(); // Creates New Apple on the screen
+
+
         running = true; // Game is running
         timer = new Timer(DELAY,this);
         timer.start();
@@ -55,21 +56,59 @@ public class GamePanel extends JPanel implements ActionListener {
 
     public void draw(Graphics g)
     {
+        //Grids For Snake Game Background
         for (int i = 0; i < Screen_Height / UNIT_SIZE; i++)
         {
-            g.drawLine(i * UNIT_SIZE,0,i*UNIT_SIZE, Screen_Height);
+            //Main Grid
             g.setColor(Color.red);
+            g.drawLine(i * UNIT_SIZE,0,i*UNIT_SIZE, Screen_Height);
             g.drawLine(0,i * UNIT_SIZE, Screen_Width, i*UNIT_SIZE);
-            g.setColor(Color.blue);
         }
+        //Draws the Apple
+        newApple();
+            g.setColor(Color.green);
+            g.fillOval(appleX,appleY,UNIT_SIZE, UNIT_SIZE); //Location, Location,  Width Size of Draw and Hight
+
+        //Random Triangle Draw
+        g.setColor(Color.YELLOW);
+        g.drawLine(120, 130, 280, 130) ;
+        g.drawLine(120, 130, 200, 65);
+        g.drawLine(200, 65, 280, 130);
     }
     public void newApple()
     {
+            //Generates Apple;                  //True = 0 - 24              25
+        appleX = random.nextInt((int)Screen_Width / UNIT_SIZE) * UNIT_SIZE;
+        appleY = random.nextInt((int)Screen_Height / UNIT_SIZE) * UNIT_SIZE;
 
     }
     public void move()
     {
+        for (int i = bodyParts; i > bodyParts ; i--)
+        {
+            x[i] = x[i-1]; //Shift Everything
+            y[i] = y[i-1];
+        }
 
+        switch (direction)
+        {
+            //Go Up
+            case 'U':        //25
+                y[0] = y[0] - UNIT_SIZE;
+                break;
+            //Go Down
+            case 'D':        //25
+                y[0] = y[0] + UNIT_SIZE;
+                break;
+            //Go Right
+            case 'R':        //25
+                x[0] = x[0] + UNIT_SIZE;
+                break;
+            //Go Left
+            case 'L':        //25 about size of a box
+                x[0] = x[0] - UNIT_SIZE;
+                break;
+        }
     }
     public void checkApple()
     {
